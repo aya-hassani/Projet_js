@@ -33,4 +33,12 @@ router.delete("/:id", async (req, res) => {
         res.status(500).json(err);
     }
 });
+router.patch("/:id/status", async (req, res) => {
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id,{ status: req.body.status },{ new: true});
+        res.json(task);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
 module.exports = router;
