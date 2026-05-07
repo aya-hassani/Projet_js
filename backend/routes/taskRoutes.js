@@ -13,6 +13,7 @@ router.get("/", async(req, res) => {
     try {
         const userId = req.user._id;
         const tasks = await Task.find({ assignedTo: userId}).populate("assignedTo", "name email");
+        // Adding populate to get user details
         res.json(tasks);
     } catch (err) {
         res.status(500).json(err);
