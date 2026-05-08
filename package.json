@@ -1,0 +1,25 @@
+{
+  "name": "projet_js_equipe",
+  "version": "1.0.0",
+  "description": "| **AYA HASSANI** | **Authentification & Sécurité**<br>• Création du `User Schema`<br>• Gestion de l'authentification avec `JWT`<br>• Mise en place des `Middlewares` de protection<br>• Sécurisation des mots de passe avec `Bcrypt` <br>\r | **OUMNIA ZEYOUTI** | **Gestion des Projets**<br>• Création du `Project Schema`<br>• Développement du `CRUD` complet<br>• Implémentation de la `Pagination`<br>• Relations avec l'objet User et `Cascade Delete` <br>\r | **ABIR TAGHI** | **Gestion des Tâches**<br>• Création du `Task Schema` et `CRUD`<br>• Mise à jour des statuts (`PATCH`) et assignations<br>• Filtrage par utilisateur et validation `Enum` (Priorités) <br>\r | **AYA CHELH** | **Dashboard & Interface**<br>• Dashboard avec filtrage, recherche et pagination<br>• Système de `Notifications` (UI et LocalStorage)<br>• Utilisation de `UUID` et interface utilisateur .",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aya-hassani/Projet_js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/aya-hassani/Projet_js/issues"
+  },
+  "homepage": "https://github.com/aya-hassani/Projet_js#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "mongoose": "^9.6.1"
+  }
+}
