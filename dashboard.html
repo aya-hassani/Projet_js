@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de Bord - Gestion de Projets</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; margin: 0; }
+        .sidebar { width: 250px; background: #2c3e50; color: white; height: 100vh; padding: 20px; }
+        .main-content { flex-grow: 1; padding: 20px; }
+        .form-container { background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin-bottom: 20px; border-radius: 8px; }
+        input, select, textarea { display: block; width: 100%; margin-bottom: 10px; padding: 8px; }
+        button { cursor: pointer; padding: 10px 15px; border: none; border-radius: 4px; }
+        .btn-project { background: #28a745; color: white; }
+        .btn-task { background: #007bff; color: white; }
+        .project-card { border: 1px solid #eee; padding: 10px; margin-top: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Mes Projets</h2>
+        <ul id="projectList" style="list-style: none; padding: 0;"></ul>
+        <button id="logoutBtn" style="background: #e74c3c; color: white; margin-top: 20px;">Déconnexion</button>
+    </div>
+
+    <div class="main-content">
+        <h1>Tableau de Bord</h1>
+
+        <div class="form-container">
+            <h3>Nouveau Projet</h3>
+            <form id="addProjectForm">
+                <input type="text" id="projectTitle" placeholder="Titre du projet" required>
+                <textarea id="projectDesc" placeholder="Description"></textarea>
+                <input type="date" id="projectDueDate">
+                <select id="projectStatus">
+                    <option value="actif">Actif</option>
+                    <option value="en pause">En pause</option>
+                    <option value="archivé">Archivé</option>
+                </select>
+                <button type="submit" class="btn-project">Enregistrer le Projet</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <h3>Ajouter une Tâche</h3>
+            <form id="addTaskForm">
+                <input type="text" id="taskTitle" placeholder="Titre de la tâche" required>
+                <select id="taskPriority">
+                    <option value="basse">Basse</option>
+                    <option value="moyenne" selected>Moyenne</option>
+                    <option value="haute">Haute</option>
+                </select>
+                <select id="taskStatus">
+                    <option value="à faire">À faire</option>
+                    <option value="en cours">En cours</option>
+                    <option value="terminé">Terminé</option>
+                </select>
+                <button type="submit" class="btn-task">Ajouter la Tâche</button>
+            </form>
+        </div>
+
+        <div id="projectsDisplay">
+            </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
