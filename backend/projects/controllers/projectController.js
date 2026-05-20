@@ -1,5 +1,5 @@
 const Project = require('../models/Project');
-const Task = require('../models/Task');
+// const Task = require('../models/Task');   // Commenté car Personne 3 n'a pas encore ajouté Task
 
 exports.getProjects = async (req, res) => {
   try {
@@ -69,7 +69,7 @@ exports.deleteProject = async (req, res) => {
     if (!project) {
       return res.status(404).json({ success: false, message: 'Projet non trouve' });
     }
-    await Task.deleteMany({ project: req.params.id });
+   // await Task.deleteMany({ project: req.params.id });   // Commenté temporairement
     await Project.deleteOne({ _id: req.params.id });
     res.json({ success: true, message: 'Projet supprime' });
   } catch (error) {
