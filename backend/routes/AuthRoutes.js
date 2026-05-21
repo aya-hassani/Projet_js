@@ -1,13 +1,13 @@
 ﻿const express = require('express');
 const router = express.Router();
 const { register, login, getMe } = require('../controllers/authController');
+const { protect } = require('../middleware/authMiddleware'); // <-- On importe le vigile
 
-// Route pour l'inscription : POST http://localhost:5000/api/auth/register
+// Routes publiques
 router.post('/register', register);
-
-// Route pour la connexion : POST http://localhost:5000/api/auth/login
 router.post('/login', login);
 
-// Note : La route /me (profil) sera ajoutée dès qu'on aura écrit le middleware de sécurité !
+// Route privée (protégée par le middleware)
+router.get('/me', protect, getMe); // <-- Seul un utilisateur connecté peut y accéder
 
 module.exports = router;
