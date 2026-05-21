@@ -1,0 +1,10 @@
+[33mc6de679[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/projets[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mfeature/projets[m[33m, [m[1;32mdevelop[m[33m)[m Delete backend/routes directory
+[33m5d44d47[m Delete middleware directory
+[33mcff1cc7[m Delete backend/controllers directory
+[33m630903a[m Update User.js
+[33mc7657c3[m Update authMiddleware.js
+[33mbba3028[m Update authRoutes.js
+[33m2d79d26[m authController.js
+[33m7e1dccf[m fix: update auth and projects files
+[33m2632ace[m fix: add missing auth routes and controllers
+[33m0ed5fb0[m feat: add auth, projects, and docker-compose
