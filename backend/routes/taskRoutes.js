@@ -1,44 +1,18 @@
 const express = require("express");
+const {
+  createTask,
+  getTasksByProject,
+  updateTask,
+  deleteTask,
+  updateTaskStatus
+} = require("../controllers/taskController");
+
 const router = express.Router();
-const Task = require("../models/Task");
-router.post("/", async (req, res) => {
-    try{
-        const task = await Task.create(req.body);
-        res.status(201).json(task);
-    } catch (err) {
-        res.status(400).json(err);
-    }
-});
-router.get("/", async(req, res) => {
-    try {
-        const tasks = await Task.find();
-        res.json(tasks);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-router.put("/:id", async (req, res) => {
-    try {
-        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true,});
-        res.json(task);
-    } catch (err) {
-        res.status(400).json(err);
-    }
-});
-router.delete("/:id", async (req, res) => {
-    try {
-        await Task.findByIdAndDelete(req.params.id);
-        res.json({ message: "Task supprimée"});
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-router.patch("/:id/status", async (req, res) => {
-    try {
-        const task = await Task.findByIdAndUpdate(req.params.id,{ status: req.body.status },{ new: true});
-        res.json(task);
-    } catch (err) {
-        res.status(400).json(err);
-    }
-});
+
+router.post("/projects/:projectId/tasks", createTask);
+router.get("/projects/:projectId/tasks", getTasksByProject);
+router.put("/tasks/:taskId", updateTask);
+router.delete("/tasks/:taskId", deleteTask);
+router.patch("/tasks/:taskId/status", updateTaskStatus);
+
 module.exports = router;
