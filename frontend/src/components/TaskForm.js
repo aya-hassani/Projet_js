@@ -1,75 +1,111 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const TaskForm = ({ projectId, onTaskCreated }) => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState('moyenne');
+const TaskForm = ({ onTaskCreated }) => {
+  // États locaux pour stocker les valeurs des champs du formulaire
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-    useEffect(() => {
-        const savedTitle = localStorage.getItem('draft_task_title');
-        const savedDesc = localStorage.getItem('draft_task_desc');
-        if (savedTitle) setTitle(savedTitle);
-        if (savedDesc) setDescription(savedDesc);
-    }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
 
-    useEffect(() => {
-        localStorage.setItem('draft_task_title', title);
-        localStorage.setItem('draft_task_desc', description);
-    }, [title, description]);
+    // Validation simple
+    if (!title.trim()) {
+      setError('Le titre de la tâche est obligatoire.');
+      return;
+    }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/projects/${projectId}/tasks`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ title, description, priority, status: 'à faire' })
-            });
+    try {
+      // Récupération du token d'authentification stocké lors du login
+      const token = localStorage.getItem('token');
 
-            if (response.ok) {
-                setTitle('');
-                setDescription('');
-                localStorage.removeItem('draft_task_title');
-                localStorage.removeItem('draft_task_desc');
-                if (onTaskCreated) onTaskCreated();
-            }
-        } catch (error) {
-            console.error("Erreur");
-        }
-    };
+      const response = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // On passe le vigile du backend
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          dueDate,
+        }),
+      });
 
-    return (
-        <div style={{ padding: '15px', border: '1px solid #ccc', margin: '15px 0' }}>
-            <h4>Nouvelle Tâche</h4>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    placeholder="Titre" 
-                    value={title} 
-                    onChange={(e) => setTitle(e.target.value)} 
-                    required 
-                    style={{ display: 'block', width: '100%', marginBottom: '10px', padding: '5px' }} 
-                />
-                <textarea 
-                    placeholder="Description" 
-                    value={description} 
-                    onChange={(e) => setDescription(e.target.value)} 
-                    required 
-                    style={{ display: 'block', width: '100%', marginBottom: '10px', padding: '5px' }} 
-                />
-                <select value={priority} onChange={(e) => setPriority(e.target.value)} style={{ display: 'block', marginBottom: '10px', padding: '5px' }}>
-                    <option value="basse">Basse</option>
-                    <option value="moyenne">Moyenne</option>
-                    <option value="haute">Haute</option>
-                </select>
-                <button type="submit" style={{ backgroundColor: '#007bff', color: 'white', padding: '5px 10px', border: 'none', cursor: 'pointer' }}>Créer la tâche</button>
-            </form>
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Une erreur est survenue lors de la création.');
+      }
+
+      // Succès
+      setSuccess('Tâche créée avec succès !');
+      setTitle('');
+      setDescription('');
+      setDueDate('');
+
+      // Si le composant parent a besoin de rafraîchir la liste des tâches
+      if (onTaskCreated) {
+        onTaskCreated(data);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div className="task-form-container" style={{ maxWidth: '500px', margin: '20px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
+      <h3>Créer une nouvelle tâche</h3>
+      
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '15px' }}>
+          <label htmlFor="title" style={{ display: 'block', marginBottom: '5px' }}>Titre :</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Ex: Finir le rapport de stage"
+            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+          />
         </div>
-    );
+
+        <div style={{ marginBottom: '15px' }}>
+          <label htmlFor="description" style={{ display: 'block', marginBottom: '5px' }}>Description :</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Ajoute des détails sur la tâche..."
+            rows="4"
+            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', resize: 'vertical' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <label htmlFor="dueDate" style={{ display: 'block', marginBottom: '5px' }}>Date limite :</label>
+          <input
+            type="date"
+            id="dueDate"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+          />
+        </div>
+
+        <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+          Ajouter la tâche
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default TaskForm;
