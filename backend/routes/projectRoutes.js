@@ -10,13 +10,11 @@ const {
   removeMember
 } = require('../controllers/projectController');
 
-router.get('/', auth, getProjects);
-router.post('/', auth, createProject);
-router.put('/:id', auth, updateProject);
-router.delete('/:id', auth, deleteProject);
-
-
-router.post('/:id/members', auth, addMember);
-router.delete('/:id/members/:userId', auth, removeMember);
+router.get('/', protect, getProjects);
+router.post('/', protect, createProject);
+router.put('/:id', protect, updateProject);
+router.delete('/:id', protect, deleteProject);
+router.post('/:id/members', protect, addMember);
+router.delete('/:id/members/:userId', protect, removeMember);
 
 module.exports = router;
