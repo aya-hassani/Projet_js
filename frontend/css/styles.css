@@ -1,0 +1,276 @@
+/* ==========================================================================
+   TASKFLOW - FEUILLE DE STYLE COMMUNE (frontend/css/styles.css)
+   Conçu pour l'architecture Vanilla JS (HTML5 / CSS3 standard)
+   ========================================================================== */
+
+/* 1. RÉINITIALISATION ET CONFIGURATION GLOBALE */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+    line-height: 1.5;
+}
+
+/* 2. STRUCTURES DE MISE EN PAGE ET CONTENEURS */
+.flex-container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Centre les pages de connexion et d'inscription verticalement et horizontalement */
+.auth-wrapper {
+    min-height: 90vh;
+    display: block;
+    text-align: center;
+    padding-top: 10vh;
+}
+
+/* Fenêtre blanche (Card) pour les formulaires d'authentification */
+.auth-card {
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
+    display: inline-block;
+    text-align: left;
+    border-top: 4px solid #1877f2; /* Accentuation bleue en haut */
+}
+
+.auth-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #222222;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* 3. GROUPES DE FORMULAIRES ET ENTRÉES AVEC EFFETS */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 11px 13px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    background-color: #fafafa;
+    color: #333333;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #1877f2;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
+    outline: none;
+}
+
+/* 4. BOUTONS STYLISÉS */
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #1877f2;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #1461c9;
+}
+
+.btn-success {
+    background-color: #00a400;
+    color: #ffffff;
+}
+
+.btn-success:hover {
+    background-color: #008500;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Liens de bas de page d'authentification */
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666666;
+}
+
+.auth-footer a {
+    color: #1877f2;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* 5. ZONES DE MESSAGES ET ALERTES API */
+.alert {
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.alert-danger {
+    background-color: #ffebe9;
+    color: #ce1515;
+    border-color: #ffc8c6;
+}
+
+.alert-success {
+    background-color: #e6f4ea;
+    color: #137333;
+    border-color: #ceead6;
+}
+
+/* 6. BARRE DE NAVIGATION (NAVBAR COMPLÈTE VIA TABLE CONSTRAINTS) */
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 24px;
+    height: 65px;
+}
+
+.navbar-inner {
+    display: table;
+    width: 100%;
+    height: 65px;
+}
+
+.navbar-brand-box, .navbar-actions-box {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.navbar-actions-box {
+    text-align: right;
+}
+
+.brand-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1877f2;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.user-profile-tag {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #444444;
+    margin-right: 15px;
+}
+
+.btn-logout {
+    background-color: #f44336;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-block;
+}
+
+.btn-logout:hover {
+    background-color: #d32f2f;
+}
+
+/* 7. MODULE CLOCHE DE NOTIFICATION & DROPDOWN MENU */
+.notification-bell-box {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.bell-toggle-btn {
+    background: #f0f2f5;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    transition: background-color 0.2s;
+    outline: none;
+}
+
+.bell-toggle-btn:hover {
+    background-color: #e4e6eb;
+}
+
+.numeric-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #e53935;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 1px 6px;
+    min-width: 18px;
+    text-align: center;
+    border: 2px solid #ffffff;
+}
+
+/* Boîte déroulante des notifications */
+.notif-dropdown {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background

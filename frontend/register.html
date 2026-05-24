@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Inscription</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        /* Styles CSS intégrés pour un test visuel immédiat sans fichier externe */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 360px;
+        }
+        .card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00a400; /* Vert pour l'inscription */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #008f00;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+            display: none; /* Caché par défaut */
+        }
+        .error {
+            background-color: #ffebe9;
+            color: #ce1515;
+            border: 1px solid #ffc8c6;
+            display: block;
+        }
+        .success {
+            background-color: #e6f4ea;
+            color: #137333;
+            border: 1px solid #ceead6;
+            display: block;
+        }
+        .link-login {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .link-login a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h2>TaskFlow - Inscription</h2>
+            
+            <div id="messageBox" class="message"></div>
+            
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" placeholder="Ex: Aya Hassani" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Adresse Email</label>
+                    <input type="email" id="email" placeholder="exemple@mail.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="submitBtn">S'inscrire</button>
+            </form>
+
+            <div class="link-login">
+                Déjà membre ? <a href="login.html">Connectez-vous ici</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/register.js"></script>
+</body>
+</html>
