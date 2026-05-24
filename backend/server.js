@@ -7,7 +7,10 @@ const AuthRoutes = require('./routes/AuthRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    credentials: true
+}));
 app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/taskflow')

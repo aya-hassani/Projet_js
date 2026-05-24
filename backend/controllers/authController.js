@@ -1,8 +1,9 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign({ userId }, 'superSecretKey123', { expiresIn: '7d' });
 };
 
 exports.register = async (req, res) => {
@@ -12,7 +13,11 @@ exports.register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: 'Email déjà utilisé' });
     }
-    const user = await User.create({ name, email, password });
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = await User.create({ name, email, password: hashedPassword });
+    
     res.status(201).json({
       message: 'Inscription réussie',
       token: generateToken(user._id),
@@ -30,10 +35,16 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Identifiants incorrects' });
     }
-    const isMatch = await user.comparePassword(password);
+    
+    console.log("🔍 Mot de passe saisi:", password);
+    console.log("🔍 Mot de passe haché dans DB:", user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("🔍 Résultat comparaison:", isMatch);
+    
     if (!isMatch) {
       return res.status(401).json({ message: 'Identifiants incorrects' });
     }
+    
     res.json({
       message: 'Connexion réussie',
       token: generateToken(user._id),
