@@ -10,8 +10,8 @@ const {
   removeMember
 } = require('../controllers/projectController');
 
-//router.get('/', protect, getProjects);
-//router.post('/', protect, createProject);
+router.get('/', protect, getProjects);
+router.post('/', protect, createProject);
 router.put('/:id', protect, updateProject);
 router.delete('/:id', protect, deleteProject);
 router.post('/:id/members', protect, addMember);
