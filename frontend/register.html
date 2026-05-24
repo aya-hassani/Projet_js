@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Inscription</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>Créer un compte</h2>
+            <p>Rejoignez TaskFlow et gérez vos projets facilement.</p>
+        </div>
+
+        <div id="messageBox" class="alert"></div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">Nom Complet</label>
+                <input type="text" id="name" placeholder="Aya Hassani" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Adresse Email</label>
+                <input type="email" id="email" placeholder="exemple@domaine.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-submit">S'inscrire</button>
+        </form>
+
+        <div class="auth-footer">
+            Déjà inscrit ? <a href="login.html">Se connecter</a>
+        </div>
+    </div>
+
+    <script src="js/register.js"></script>
+</body>
+</html>
