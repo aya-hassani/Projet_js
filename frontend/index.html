@@ -175,36 +175,45 @@
             document.getElementById('welcomeMessage').innerText = `Bienvenue, ${userSession.name} !`;
         }
         
-        // Charger les projets depuis le backend (avec token direct)
-        fetch('http://localhost:5000/api/projects?page=1&limit=10', {
-        headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTEyNzJlODA0ZDIzNzE5MWExYjVlYWUiLCJpYXQiOjE3Nzk2MzU5MDcsImV4cCI6MTc4MDI0MDcwN30.hlpM8Tz6dSGULnSSAbysICVXn9kKfq7JcVLpEoql8_4' }
-        })
-        .then(res => res.json())
-        .then(data => {
-            const projects = data.data;
-            const mainContent = document.querySelector('.dashboard-content');
-            
-            if (projects && projects.length > 0) {
-                mainContent.innerHTML += '<h2>📁 Mes Projets</h2>';
-                projects.forEach(project => {
-                    mainContent.innerHTML += `
-                        <div class="project-card">
-                            <h3>${project.title}</h3>
-                            <p>${project.description || 'Aucune description'}</p>
-                            <p>Statut: <strong>${project.status}</strong></p>
-                            <p>Date limite: ${project.deadline ? new Date(project.deadline).toLocaleDateString() : 'Non définie'}</p>
-                            <button onclick="selectProject('${project._id}')">Sélectionner</button>
-                        </div>
-                    `;
-                });
-            } else {
-                mainContent.innerHTML += '<p style="color:orange;">⚠️ Aucun projet pour le moment. Créez-en un depuis l\'interface !</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Erreur chargement projets:', error);
-            document.querySelector('.dashboard-content').innerHTML += '<p style="color:red;">❌ Erreur lors du chargement des projets. Vérifiez que le serveur backend est démarré.</p>';
-        });
+        // Interceptor pour ajouter le token à toutes les requêtes
+        axios.interceptors.request.use(
+            config => {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
+                return config;
+            },
+            error => Promise.reject(error)
+        );
+        
+        // Charger les projets depuis le backend avec axios
+        axios.get('http://localhost:5000/api/projects?page=1&limit=10')
+            .then(response => {
+                const projects = response.data.data;
+                const mainContent = document.querySelector('.dashboard-content');
+                
+                if (projects && projects.length > 0) {
+                    mainContent.innerHTML += '<h2>📁 Mes Projets</h2>';
+                    projects.forEach(project => {
+                        mainContent.innerHTML += `
+                            <div class="project-card">
+                                <h3>${project.title}</h3>
+                                <p>${project.description || 'Aucune description'}</p>
+                                <p>Statut: <strong>${project.status}</strong></p>
+                                <p>Date limite: ${project.deadline ? new Date(project.deadline).toLocaleDateString() : 'Non définie'}</p>
+                                <button onclick="selectProject('${project._id}')">Sélectionner</button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    mainContent.innerHTML += '<p style="color:orange;">⚠️ Aucun projet pour le moment. Créez-en un depuis l\'interface !</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Erreur chargement projets:', error);
+                document.querySelector('.dashboard-content').innerHTML += '<p style="color:red;">❌ Erreur lors du chargement des projets. Vérifiez que le serveur backend est démarré.</p>';
+            });
         
         function selectProject(projectId) {
             localStorage.setItem('currentProjectId', projectId);
